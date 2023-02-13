@@ -5,6 +5,6 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(fontFamily: 'sunflower'),
-    home: RouteMain(),
+    home: const RouteMain(),
   ));
 }

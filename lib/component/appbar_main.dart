@@ -1,4 +1,3 @@
-import 'package:finedust_practice01/const/colors.dart';
 import 'package:finedust_practice01/model/model_fetch_data.dart';
 import 'package:finedust_practice01/model/model_variable.dart';
 import 'package:finedust_practice01/my_app/my_app.dart';

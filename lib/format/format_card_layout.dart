@@ -1,4 +1,3 @@
-import 'package:finedust_practice01/const/colors.dart';
 import 'package:flutter/material.dart';
 
 class FormatCardLayout extends StatelessWidget {

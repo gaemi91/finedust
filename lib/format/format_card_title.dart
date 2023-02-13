@@ -1,4 +1,3 @@
-import 'package:finedust_practice01/const/colors.dart';
 import 'package:finedust_practice01/my_app/my_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class FormatCardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         color: colorBG,
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(16.0),

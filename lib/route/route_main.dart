@@ -2,7 +2,6 @@ import 'package:finedust_practice01/component/appbar_main.dart';
 import 'package:finedust_practice01/component/drawer_main.dart';
 import 'package:finedust_practice01/component/hourly_card_main.dart';
 import 'package:finedust_practice01/component/type_card_main.dart';
-import 'package:finedust_practice01/const/colors.dart';
 import 'package:finedust_practice01/const/regions.dart';
 import 'package:finedust_practice01/model/model_fetch_data.dart';
 import 'package:finedust_practice01/model/model_variable.dart';
@@ -50,7 +49,6 @@ class _RouteMainState extends State<RouteMain> {
           }
 
           final Map<ItemCode, List<ModelFetchData>> mapFineDust = snapshot.data!;
-          final a = mapFineDust[ItemCode.PM10]![0];
 
           final ModelVariable modelVariableBy = MyApp.currentLevel(
             itemCode: ItemCode.PM10,
