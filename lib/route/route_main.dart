@@ -5,6 +5,7 @@ import 'package:finedust_practice01/component/type_card_main.dart';
 import 'package:finedust_practice01/const/colors.dart';
 import 'package:finedust_practice01/const/regions.dart';
 import 'package:finedust_practice01/my_app/my_app.dart';
+import 'package:finedust_practice01/repository/repository_data.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
@@ -25,6 +26,7 @@ class _RouteMainState extends State<RouteMain> {
   void initState() {
     super.initState();
     scrollController.addListener(scrollListener);
+
   }
 
   @override
@@ -34,9 +36,11 @@ class _RouteMainState extends State<RouteMain> {
     super.dispose();
   }
 
-  Future aaaaa()async{
+  pullData()async{
 
   }
+
+
 
   @override
   Widget build(BuildContext context) {
