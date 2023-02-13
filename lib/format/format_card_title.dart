@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class FormatCardTitle extends StatelessWidget {
   final String title;
+  final Color colorBG;
 
   const FormatCardTitle({
+    required this.colorBG,
     required this.title,
     Key? key,
   }) : super(key: key);
@@ -14,9 +16,9 @@ class FormatCardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
-      decoration: const BoxDecoration(
-        color: Color_Main_Dark,
-        borderRadius: BorderRadius.only(
+      decoration:  BoxDecoration(
+        color: colorBG,
+        borderRadius: const BorderRadius.only(
           topRight: Radius.circular(16.0),
           topLeft: Radius.circular(16.0),
         ),

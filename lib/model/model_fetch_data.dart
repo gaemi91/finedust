@@ -41,6 +41,47 @@ class ModelFetchData {
         gyeonggi = double.parse(json['gyeonggi'] ?? '0'),
         dataTime = DateTime.parse(json['dataTime']),
         itemCode = parseItemCode(json['itemCode']);
+
+  double stringToDouble({required String region}) {
+    switch (region) {
+      case '서울':
+        return seoul;
+      case '대구':
+        return daegu;
+      case '충남':
+        return chungnam;
+      case '인천':
+        return incheon;
+      case '대전':
+        return daejeon;
+      case '경북':
+        return gyeongbuk;
+      case '세종':
+        return sejong;
+      case '광주':
+        return gwangju;
+      case '전북':
+        return jeonbuk;
+      case '강원':
+        return gangwon;
+      case '울산':
+        return ulsan;
+      case '전남':
+        return jeonnam;
+      case '부산':
+        return busan;
+      case '제주':
+        return jeju;
+      case '충북':
+        return chungbuk;
+      case '경남':
+        return gyeongnam;
+      case '경기':
+        return gyeonggi;
+      default:
+        return throw Exception('지역이 설정되지 않았습니다.');
+    }
+  }
 }
 
 parseItemCode(String itemCode) {

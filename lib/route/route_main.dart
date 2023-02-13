@@ -5,6 +5,7 @@ import 'package:finedust_practice01/component/type_card_main.dart';
 import 'package:finedust_practice01/const/colors.dart';
 import 'package:finedust_practice01/const/regions.dart';
 import 'package:finedust_practice01/model/model_fetch_data.dart';
+import 'package:finedust_practice01/model/model_variable.dart';
 import 'package:finedust_practice01/my_app/my_app.dart';
 import 'package:finedust_practice01/repository/repository_data.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +45,22 @@ class _RouteMainState extends State<RouteMain> {
             return const Scaffold(body: Center(child: Text('에러가 있습니다.')));
           }
 
+          if (!snapshot.hasData) {
+            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+
+          final Map<ItemCode, List<ModelFetchData>> mapFineDust = snapshot.data!;
+          final a = mapFineDust[ItemCode.PM10]![0];
+
+          final ModelVariable modelVariableBy = MyApp.currentLevel(
+            itemCode: ItemCode.PM10,
+            value: mapFineDust[ItemCode.PM10]![0].stringToDouble(region: region),
+          );
+
           return Scaffold(
-            backgroundColor: Color_Main_Basic,
+            backgroundColor: modelVariableBy.colorBasic,
             drawer: DrawerMain(
+              mapFineDust: mapFineDust,
               regionSelected: region,
               regionSetter: (region) {
                 setState(() {
@@ -61,9 +75,20 @@ class _RouteMainState extends State<RouteMain> {
                 slivers: [
                   AppBarMain(
                     region: region,
+                    mapFineDust: mapFineDust,
                   ),
-                  TypeCardMain(),
-                  HourlyCardMain(),
+                  TypeCardMain(
+                    region: region,
+                    mapFineDust: mapFineDust,
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: MyApp.valueNotifierItemCode,
+                    builder: (context, value, child) => HourlyCardMain(
+                      itemCode: value,
+                      region: region,
+                      mapFineDust: mapFineDust,
+                    ),
+                  ),
                 ],
               ),
             ),
