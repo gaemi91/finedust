@@ -4,6 +4,7 @@ import 'package:finedust_practice01/component/hourly_card_main.dart';
 import 'package:finedust_practice01/component/type_card_main.dart';
 import 'package:finedust_practice01/const/colors.dart';
 import 'package:finedust_practice01/const/regions.dart';
+import 'package:finedust_practice01/model/model_fetch_data.dart';
 import 'package:finedust_practice01/my_app/my_app.dart';
 import 'package:finedust_practice01/repository/repository_data.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +22,10 @@ class _RouteMainState extends State<RouteMain> {
   String region = regions[0];
   ScrollController scrollController = ScrollController();
 
-
   @override
   void initState() {
     super.initState();
     scrollController.addListener(scrollListener);
-
   }
 
   @override
@@ -36,38 +35,40 @@ class _RouteMainState extends State<RouteMain> {
     super.dispose();
   }
 
-  pullData()async{
-
-  }
-
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color_Main_Basic,
-      drawer: DrawerMain(
-        regionSelected: region,
-        regionSetter: (region) {
-          setState(() {
-            this.region = region;
-          });
-        },
-      ),
-      body: SafeArea(
-        child: CustomScrollView(
-          controller: scrollController,
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            AppBarMain(
-              region: region,
+    return FutureBuilder<Map<ItemCode, List<ModelFetchData>>>(
+        future: dataFetch(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Scaffold(body: Center(child: Text('에러가 있습니다.')));
+          }
+
+          return Scaffold(
+            backgroundColor: Color_Main_Basic,
+            drawer: DrawerMain(
+              regionSelected: region,
+              regionSetter: (region) {
+                setState(() {
+                  this.region = region;
+                });
+              },
             ),
-            TypeCardMain(),
-            HourlyCardMain(),
-          ],
-        ),
-      ),
-    );
+            body: SafeArea(
+              child: CustomScrollView(
+                controller: scrollController,
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  AppBarMain(
+                    region: region,
+                  ),
+                  TypeCardMain(),
+                  HourlyCardMain(),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   void scrollListener() {
@@ -78,5 +79,23 @@ class _RouteMainState extends State<RouteMain> {
         MyApp.valueNotifierIsExpanded.value = isExpanded;
       });
     }
+  }
+
+  Future<Map<ItemCode, List<ModelFetchData>>> dataFetch() async {
+    final Map<ItemCode, List<ModelFetchData>> mapFineDust = {};
+
+    List<Future> listFuture = [];
+
+    for (ItemCode itemCode in ItemCode.values) {
+      listFuture.add(RepositoryData.fetchData(itemCode: itemCode));
+    }
+
+    final listModelFetchData = await Future.wait(listFuture);
+
+    for (int i = 0; i < ItemCode.values.length; i++) {
+      mapFineDust.addAll({ItemCode.values[i]: listModelFetchData[i]});
+    }
+
+    return mapFineDust;
   }
 }

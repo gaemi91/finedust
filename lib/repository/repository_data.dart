@@ -3,7 +3,7 @@ import 'package:finedust_practice01/const/data.dart';
 import 'package:finedust_practice01/model/model_fetch_data.dart';
 
 class RepositoryData {
-  static Future<List<ModelFetchData>> fetchData() async {
+  static Future<List<ModelFetchData>> fetchData({required ItemCode itemCode}) async {
     final resp = await Dio().get(
       'http://apis.data.go.kr/B552584/ArpltnStatsSvc/getCtprvnMesureLIst',
       queryParameters: {
@@ -11,7 +11,7 @@ class RepositoryData {
         'returnType': 'json',
         'numOfRows': 30,
         'pageNo': 1,
-        'itemCode': 'PM10',
+        'itemCode': itemCode.name,
         'dataGubun': 'Hour',
         'searchCondition': 'WEEK',
       },
